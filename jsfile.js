@@ -7,21 +7,24 @@ var high_score;
 var high_score_msg;
 var game_over_msg;
 var restart_game;
+var back_image;
 
 var score_list = [];
+
 
 // StartGame function is invoked whenever the page is load
 function startGame(){
     myGameArea.start();
 
-    restart_game = document.getElementById("restart").style.display = "none";
+    document.getElementById("restart").style.display = "none";
     
     //generating the cat component at ranom places using max and min value
     catimg = new component(50, 50, "characters/cat.png", Math.floor(Math.random()*(max-min) + min), Math.floor(Math.random()*(max-min) + min), "image");
     //cat = new component(30, 30, 'red', Math.floor(Math.random()*(max-min) + min), Math.floor(Math.random()*(max-min) + min));
     dog = new component(30, 30,"characters/dog.png", myGameArea.canvas.width/2, myGameArea.canvas.height/2, "image");
-    score = new component("20px", "The Serif Hand Light", "black", 480, 30, "text");
-    game_over_msg = new component("20px", "The Serif Hand Light", "black", myGameArea.canvas.width/3, myGameArea.canvas.height/1.5, "text");
+    back_image = new component(myGameArea.canvas.width,myGameArea.canvas.height, "background/g1.jpg", 0, 0, "image");
+    score = new component("20px", "The Serif Hand Light", "yellow", 600, 30, "text");
+    game_over_msg = new component("20px", "The Serif Hand Light", "white", myGameArea.canvas.width/2.5, myGameArea.canvas.height/1.5, "text");
     displayScore();
 }
 
@@ -29,14 +32,14 @@ function startGame(){
 var myGameArea = {
     canvas : document.createElement("canvas"),
     start : function(){
-        this.canvas.width = 600;
+        this.canvas.width = 900;
         this.canvas.height = 600;
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
 
 
         this.frameNo = 0; //initializing the frameNo value to 0
-        this.interval = setInterval(updateGameArea, 5);//update the updateGameArea function every 5 millisecond
+        this.interval = setInterval(updateGameArea, 7);//update the updateGameArea function every 5 millisecond
 
         
         this.execute = setTimeout(gameExecute, 5000); //executes the function gameExecute after 2 minutes
@@ -101,6 +104,7 @@ function component(width, height, color, x, y, type){
 //UpdateGameArea function updates every properties and conditions for the defined interval of time
 function updateGameArea(){
     myGameArea.clear(); 
+    back_image.update();
     catimg.update();
     dog.speedX = 0;
     dog.speedY = 0;
@@ -164,27 +168,25 @@ function gameExecute(){
     myGameArea.stop();
     game_over_msg.text = "Game Over: TIMEOUT";
     game_over_msg.update();
-    restart_game = document.getElementById("restart").style.display = "block";
-
-
+    document.getElementById("restart").style.display = "block";
 
     //below is the code for the score to store in the list
 
     //console.log(Math.floor(myGameArea.frameNo));
 
     score_list.push(Math.floor(myGameArea.frameNo));
-    var sorted_lst = score_list.sort()
+    var sorted_lst = score_list.sort();
     var sorted_desc_list = sorted_lst.reverse();
 
     //console.log(score_list[0])
-    high_score_msg = new component("20px", "The Serif Hand Light", "black", 10, 30, "text");
+    high_score_msg = new component("20px", "The Serif Hand Light", "yellow", 200, 30, "text");
     high_score_msg.text = "Top 10 scores: ";
     high_score_msg.update();
     var i;
     for (i=0; i<sorted_desc_list.length; i++){
         if (i < 10) {
-            console.log(sorted_desc_list[i], '\n');
-            high_score = new component("20px", "The Serif Hand Light", "black", 130, 30*(i+1), "text");
+            console.log(sorted_desc_list[i]);
+            high_score = new component("20px", "The Serif Hand Light", "yellow", 320, 30*(i+1), "text");
         
             high_score.text = sorted_desc_list[i];
             high_score.update();
