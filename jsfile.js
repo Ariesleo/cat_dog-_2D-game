@@ -20,7 +20,6 @@ function startGame(){
     
     //generating the cat component at ranom places using max and min value
     catimg = new component(50, 50, "characters/cat.png", Math.floor(Math.random()*(max-min) + min), Math.floor(Math.random()*(max-min) + min), "image");
-    //cat = new component(30, 30, 'red', Math.floor(Math.random()*(max-min) + min), Math.floor(Math.random()*(max-min) + min));
     dog = new component(30, 30,"characters/dog.png", myGameArea.canvas.width/2, myGameArea.canvas.height/2, "image");
     back_image = new component(myGameArea.canvas.width,myGameArea.canvas.height, "background/g1.jpg", 0, 0, "image");
     score = new component("20px", "The Serif Hand Light", "yellow", 600, 30, "text");
@@ -159,6 +158,10 @@ function updateGameArea(){
     score.text = "SCORE: " + Math.floor(myGameArea.frameNo); //using the floor value to remove the decimal score value
     score.update();
 
+    if (myGameArea.keys && myGameArea.keys[13]) {
+        startGame();
+    }
+
     return myGameArea.frameNo;
 }
 
@@ -170,23 +173,21 @@ function gameExecute(){
     game_over_msg.update();
     document.getElementById("restart").style.display = "block";
 
+
     //below is the code for the score to store in the list
-
-    //console.log(Math.floor(myGameArea.frameNo));
-
     score_list.push(Math.floor(myGameArea.frameNo));
     var sorted_lst = score_list.sort();
     var sorted_desc_list = sorted_lst.reverse();
 
     //console.log(score_list[0])
-    high_score_msg = new component("20px", "The Serif Hand Light", "yellow", 200, 30, "text");
+    high_score_msg = new component("20px", "The Serif Hand Light", "yellow", 230, 30, "text");
     high_score_msg.text = "Top 10 scores: ";
     high_score_msg.update();
     var i;
     for (i=0; i<sorted_desc_list.length; i++){
         if (i < 10) {
             console.log(sorted_desc_list[i]);
-            high_score = new component("20px", "The Serif Hand Light", "yellow", 320, 30*(i+1), "text");
+            high_score = new component("20px", "The Serif Hand Light", "yellow", 350, 30*(i+1), "text");
         
             high_score.text = sorted_desc_list[i];
             high_score.update();
