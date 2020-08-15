@@ -3,6 +3,8 @@ var max = 560;
 var min = 0;
 var catimg;
 var score;
+var high_score;
+var high_score_msg;
 var game_over_msg;
 var restart_game;
 
@@ -18,7 +20,7 @@ function startGame(){
     catimg = new component(50, 50, "characters/cat.png", Math.floor(Math.random()*(max-min) + min), Math.floor(Math.random()*(max-min) + min), "image");
     //cat = new component(30, 30, 'red', Math.floor(Math.random()*(max-min) + min), Math.floor(Math.random()*(max-min) + min));
     dog = new component(30, 30,"characters/dog.png", myGameArea.canvas.width/2, myGameArea.canvas.height/2, "image");
-    score = new component("20px", "The Serif Hand Light", "black", 280, 40, "text");
+    score = new component("20px", "The Serif Hand Light", "black", 480, 30, "text");
     game_over_msg = new component("20px", "The Serif Hand Light", "black", myGameArea.canvas.width/3, myGameArea.canvas.height/1.5, "text");
     displayScore();
 }
@@ -37,7 +39,7 @@ var myGameArea = {
         this.interval = setInterval(updateGameArea, 5);//update the updateGameArea function every 5 millisecond
 
         
-        this.execute = setTimeout(gameExecute, 30000); //executes the function gameExecute after 2 minutes
+        this.execute = setTimeout(gameExecute, 5000); //executes the function gameExecute after 2 minutes
         
 
         window.addEventListener('keydown', function (e) {
@@ -153,27 +155,11 @@ function updateGameArea(){
     score.text = "SCORE: " + Math.floor(myGameArea.frameNo); //using the floor value to remove the decimal score value
     score.update();
 
-    //apply condition and return score value
-    /*
-    if (myGameArea.keys && myGameArea.keys[37] || myGameArea.keys && myGameArea.keys[39] || myGameArea.keys && myGameArea.keys[38] || myGameArea.keys && myGameArea.keys[40]){
-        timer = new Date();
-        var minut = timer.getTime();
-        var hold = timer.getTime() + 10000;
-        if (minut = hold){
-            myGameArea.stop();
-        }
-
-        console.log(minut);
-    }*/
-
     return myGameArea.frameNo;
 }
 
 
-function displayScore(){ //work on scores in this functi
-}
-
-
+//below function will get executed and will display top 10 scores
 function gameExecute(){
     myGameArea.stop();
     game_over_msg.text = "Game Over: TIMEOUT";
@@ -187,11 +173,25 @@ function gameExecute(){
     //console.log(Math.floor(myGameArea.frameNo));
 
     score_list.push(Math.floor(myGameArea.frameNo));
+    var sorted_lst = score_list.sort()
+    var sorted_desc_list = sorted_lst.reverse();
 
-    //console.log(score_list[0]);
-
+    //console.log(score_list[0])
+    high_score_msg = new component("20px", "The Serif Hand Light", "black", 10, 30, "text");
+    high_score_msg.text = "Top 10 scores: ";
+    high_score_msg.update();
     var i;
-    for (i=0; i<score_list.length; i++){
-        console.log(score_list[i]);
+    for (i=0; i<sorted_desc_list.length; i++){
+        if (i < 10) {
+            console.log(sorted_desc_list[i], '\n');
+            high_score = new component("20px", "The Serif Hand Light", "black", 130, 30*(i+1), "text");
+        
+            high_score.text = sorted_desc_list[i];
+            high_score.update();
+            high_score.newPos();
+        }
+        else {
+            //literally do nothing i.e. will help me to not print undefined unnecessarly
+        }
     }
 }
