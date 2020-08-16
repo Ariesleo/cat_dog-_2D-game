@@ -9,9 +9,6 @@ var game_over_msg;
 var restart_game;
 var back_image;
 var score_list = [];
-var dog_down;
-var dog_up;
-var dog_right;
 
 
 //audio part
@@ -58,7 +55,7 @@ var myGameArea = {
         this.interval = setInterval(updateGameArea, 7);//update the updateGameArea function every 5 millisecond
 
         
-        this.execute = setTimeout(gameExecute, 10000); //executes the function gameExecute after 2 minutes
+        this.execute = setTimeout(gameExecute, 120000); //executes the function gameExecute after 2 minutes
         
 
         window.addEventListener('keydown', function (e) {
