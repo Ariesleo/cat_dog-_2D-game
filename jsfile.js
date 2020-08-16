@@ -31,7 +31,7 @@ function startGame(){
     catimg = new component(50, 50, "characters/cat.png", Math.floor(Math.random()*(max-min) + min), Math.floor(Math.random()*(max-min) + min), "image");
     dog = new component(30, 30,"characters/dog.png", myGameArea.canvas.width/2, myGameArea.canvas.height/2, "image");
     back_image = new component(myGameArea.canvas.width,myGameArea.canvas.height, "background/g1.jpg", 0, 0, "image");
-    score = new component("20px", "The Serif Hand Light", "yellow", 600, 30, "text");
+    score = new component("20px", "The Serif Hand Light", "yellow", 570, 30, "text");
     game_over_msg = new component("20px", "The Serif Hand Light", "white", myGameArea.canvas.width/2.5, myGameArea.canvas.height/1.5, "text");
     displayScore();
 }
@@ -50,7 +50,7 @@ var myGameArea = {
         this.interval = setInterval(updateGameArea, 7);//update the updateGameArea function every 5 millisecond
 
         
-        this.execute = setTimeout(gameExecute, 50000); //executes the function gameExecute after 2 minutes
+        this.execute = setTimeout(gameExecute, 5000); //executes the function gameExecute after 2 minutes
         
 
         window.addEventListener('keydown', function (e) {
@@ -169,10 +169,6 @@ function updateGameArea(){
     score.text = "SCORE: " + Math.floor(myGameArea.frameNo); //using the floor value to remove the decimal score value
     score.update();
 
-    if (myGameArea.keys && myGameArea.keys[13]) {
-        startGame();
-    }
-
     return myGameArea.frameNo;
 }
 
@@ -207,9 +203,5 @@ function gameExecute(){
         else {
             //literally do nothing i.e. will help me to not print undefined unnecessarly
         }
-    }
-
-    if (myGameArea.keys && myGameArea.keys[13]) {
-       startGame();
     }
 }
