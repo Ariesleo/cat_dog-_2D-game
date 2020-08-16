@@ -9,7 +9,9 @@ var game_over_msg;
 var restart_game;
 var back_image;
 var score_list = [];
-
+//var dog_right;
+//var dog_left;
+//var dog_down;
 
 //audio part
 const bg_sound = new Audio();
@@ -37,7 +39,7 @@ function startGame(){
 
     //FUTURE WORK
     //dog_down = new component(30, 30,"characters/dog_down.png", 400, 400, "image");
-    //dog_up = new component(30, 30,"characters/dog_up.png", myGameArea.canvas.width/2, myGameArea.canvas.height/2, "image");
+    //dog_left = new component(30, 30,"characters/dog_left.png", myGameArea.canvas.width/2, myGameArea.canvas.height/2, "image");
     //dog_right = new component(30, 30,"characters/dog_right.png", myGameArea.canvas.width/2, myGameArea.canvas.height/2, "image");
 }
 
@@ -132,10 +134,10 @@ function updateGameArea(){
     }
 
     if (myGameArea.keys && myGameArea.keys[39]) {  //check the event created by pressing the RIGHT arrow key
-        if(dog.x + 30 == myGameArea.canvas.width){
+        if(dog.x + 90 == myGameArea.canvas.width){
             dog.speedX = 0;
         }else{
-            dog.speedX = 3; 
+            dog.speedX = 3;
         }
     }
 
@@ -148,7 +150,7 @@ function updateGameArea(){
     }
 
     if (myGameArea.keys && myGameArea.keys[40]) {  //check the event created by pressing the DOWN arrow key
-        if(dog.y + 30 == myGameArea.canvas.height){
+        if(dog.y + 60 == myGameArea.canvas.height){
             dog.speedY = 0;
         }else{
             dog.speedY = 3;
