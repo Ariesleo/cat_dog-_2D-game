@@ -8,8 +8,17 @@ var high_score_msg;
 var game_over_msg;
 var restart_game;
 var back_image;
-
 var score_list = [];
+
+
+//audio part
+const bg_sound = new Audio();
+const catscream = new Audio();
+const dog_bark = new Audio();
+
+bg_sound.src = "gamesound/bg.wav";
+catscream.src = "gamesound/cat_scream.wav";
+dog_bark.src = "gamesound/dog_bark.wav";
 
 
 // StartGame function is invoked whenever the page is load
@@ -41,7 +50,7 @@ var myGameArea = {
         this.interval = setInterval(updateGameArea, 7);//update the updateGameArea function every 5 millisecond
 
         
-        this.execute = setTimeout(gameExecute, 5000); //executes the function gameExecute after 2 minutes
+        this.execute = setTimeout(gameExecute, 50000); //executes the function gameExecute after 2 minutes
         
 
         window.addEventListener('keydown', function (e) {
@@ -102,6 +111,7 @@ function component(width, height, color, x, y, type){
 
 //UpdateGameArea function updates every properties and conditions for the defined interval of time
 function updateGameArea(){
+    bg_sound.play();
     myGameArea.clear(); 
     back_image.update();
     catimg.update();
@@ -152,6 +162,7 @@ function updateGameArea(){
 
     if(dist <= 30){  //this if conditions checks the distance between cat and dog coordinated is less than or euquals to 30 or no and accordingly updates the cat position
         myGameArea.frameNo += 100; //if dog hit cat score value increase by 100
+        catscream.play();
         catimg = new component(50, 50, "characters/cat.png", Math.floor(Math.random()*(max-min) + min), Math.floor(Math.random()*(max-min) + min), "image");
     }
     
@@ -196,5 +207,9 @@ function gameExecute(){
         else {
             //literally do nothing i.e. will help me to not print undefined unnecessarly
         }
+    }
+
+    if (myGameArea.keys && myGameArea.keys[13]) {
+       startGame();
     }
 }
