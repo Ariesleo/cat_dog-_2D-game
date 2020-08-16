@@ -9,6 +9,9 @@ var game_over_msg;
 var restart_game;
 var back_image;
 var score_list = [];
+var dog_down;
+var dog_up;
+var dog_right;
 
 
 //audio part
@@ -28,12 +31,17 @@ function startGame(){
     document.getElementById("restart").style.display = "none";
     
     //generating the cat component at ranom places using max and min value
-    catimg = new component(50, 50, "characters/cat.png", Math.floor(Math.random()*(max-min) + min), Math.floor(Math.random()*(max-min) + min), "image");
-    dog = new component(30, 30,"characters/dog.png", myGameArea.canvas.width/2, myGameArea.canvas.height/2, "image");
+    catimg = new component(60, 40, "characters/kitten.png", Math.floor(Math.random()*(max-min) + min), Math.floor(Math.random()*(max-min) + min), "image");
+    dog = new component(90, 60,"characters/dog.png", myGameArea.canvas.width/2, myGameArea.canvas.height/2, "image");
     back_image = new component(myGameArea.canvas.width,myGameArea.canvas.height, "background/g1.jpg", 0, 0, "image");
     score = new component("20px", "The Serif Hand Light", "yellow", 570, 30, "text");
     game_over_msg = new component("20px", "The Serif Hand Light", "white", myGameArea.canvas.width/2.5, myGameArea.canvas.height/1.5, "text");
-    displayScore();
+
+
+    //FUTURE WORK
+    //dog_down = new component(30, 30,"characters/dog_down.png", 400, 400, "image");
+    //dog_up = new component(30, 30,"characters/dog_up.png", myGameArea.canvas.width/2, myGameArea.canvas.height/2, "image");
+    //dog_right = new component(30, 30,"characters/dog_right.png", myGameArea.canvas.width/2, myGameArea.canvas.height/2, "image");
 }
 
 //object myGameArea created for the canvas
@@ -50,7 +58,7 @@ var myGameArea = {
         this.interval = setInterval(updateGameArea, 7);//update the updateGameArea function every 5 millisecond
 
         
-        this.execute = setTimeout(gameExecute, 5000); //executes the function gameExecute after 2 minutes
+        this.execute = setTimeout(gameExecute, 10000); //executes the function gameExecute after 2 minutes
         
 
         window.addEventListener('keydown', function (e) {
@@ -146,7 +154,7 @@ function updateGameArea(){
         if(dog.y + 30 == myGameArea.canvas.height){
             dog.speedY = 0;
         }else{
-            dog.speedY = 3; 
+            dog.speedY = 3;
         }
     }
     dog.newPos();
@@ -160,10 +168,10 @@ function updateGameArea(){
     //identify the distances between the cat and the dog every 5 millisecond or every time the frame updates
     dist = Math.sqrt((catimg.x - dog.x)*(catimg.x - dog.x) + (catimg.y - dog.y)*(catimg.y - dog.y));
 
-    if(dist <= 30){  //this if conditions checks the distance between cat and dog coordinated is less than or euquals to 30 or no and accordingly updates the cat position
+    if(dist <= 50){  //this if conditions checks the distance between cat and dog coordinated is less than or euquals to 30 or no and accordingly updates the cat position
         myGameArea.frameNo += 100; //if dog hit cat score value increase by 100
         catscream.play();
-        catimg = new component(50, 50, "characters/cat.png", Math.floor(Math.random()*(max-min) + min), Math.floor(Math.random()*(max-min) + min), "image");
+        catimg = new component(70, 40, "characters/kitten.png", Math.floor(Math.random()*(max-min) + min), Math.floor(Math.random()*(max-min) + min), "image");
     }
     
     score.text = "SCORE: " + Math.floor(myGameArea.frameNo); //using the floor value to remove the decimal score value
